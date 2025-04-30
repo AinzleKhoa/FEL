@@ -51,14 +51,8 @@ https://www.tooplate.com/view/2127-little-fashion
                 </button>
 
                 <a class="navbar-brand" href="index.html">
-                    <strong><span>Little</span> Fashion</strong>
+                    <strong><span>FEL</span> Club</strong>
                 </a>
-
-                <div class="d-lg-none">
-                    <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                    <a href="product-detail.html" class="bi-bag custom-icon"></a>
-                </div>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto">
@@ -87,30 +81,26 @@ https://www.tooplate.com/view/2127-little-fashion
                         </li>
                     </ul>
 
-                    <div class="d-none d-lg-block">
-                        <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
-
-                        <a href="product-detail.html" class="bi-bag custom-icon"></a>
-                    </div>
+                    <a class="nav-logo" href="about.html">
+                        <img src="./assets/images/logo/logo_fel.png" class="img-fluid" alt="FEL logo">
+                    </a>
                 </div>
             </div>
         </nav>
 
-        <header class="site-header section-padding-img site-header-image">
+        <header id="contact-site-header"
+            class="site-header section-padding d-flex justify-content-center align-items-center"
+            data-bg="./assets/images/background/contact-background.jpg">
             <div class="container">
                 <div class="row">
-
-                    <div class="col-lg-10 col-12 header-info">
+                    <div class="col-lg-10 col-12">
                         <h1>
-                            <span class="d-block text-primary">Say hello to us</span>
-                            <span class="d-block text-dark">love to hear you</span>
+                            <span class="d-block text-primary">Contact Us</span>
+                            <span></span>
                         </h1>
                     </div>
                 </div>
             </div>
-
-            <img src="./assets/images/header/positive-european-woman-has-break-after-work.jpg"
-                class="header-image img-fluid" alt="">
         </header>
 
         <section class="contact section-padding">
@@ -120,80 +110,77 @@ https://www.tooplate.com/view/2127-little-fashion
                     <div class="col-lg-6 col-12">
                         <h2 class="mb-4">Let's <span>begin</span></h2>
 
-                        <form class="contact-form me-lg-5 pe-lg-3" role="form">
+                        <form class="contact-form me-lg-5 pe-lg-3" role="form" action="https://api.web3forms.com/submit"
+                            method="POST" class="contact-form me-lg-5 pe-lg-3">
+
+                            <!-- Web3Forms Access Key -->
+                            <input type="hidden" name="access_key" value="d50b5eef-5105-4d5b-9b1b-546341fa6f32">
 
                             <div class="form-floating">
-                                <input type="text" name="name" id="name" class="form-control" placeholder="Full name"
-                                    required>
-
+                                <input type="text" name="name" class="form-control" placeholder="Full name" required>
                                 <label for="name">Full name</label>
                             </div>
 
                             <div class="form-floating my-4">
-                                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control"
-                                    placeholder="Email address" required>
-
+                                <input type="email" name="email" class="form-control" placeholder="Email address"
+                                    required>
                                 <label for="email">Email address</label>
                             </div>
 
                             <div class="form-floating my-4">
-                                <input type="subject" name="subject" id="subject" class="form-control"
-                                    placeholder="Subject" required>
-
+                                <input type="text" name="subject" class="form-control" placeholder="Subject" required>
                                 <label for="subject">Subject</label>
                             </div>
 
                             <div class="form-floating mb-4">
-                                <textarea id="message" name="message" class="form-control"
-                                    placeholder="Leave a comment here" required style="height: 160px"></textarea>
-
-                                <label for="message">Tell us about the project</label>
+                                <textarea name="message" class="form-control" placeholder="Your message..." required
+                                    style="height: 160px"></textarea>
+                                <label for="message">Description</label>
                             </div>
+
+                            <!-- Optional Settings -->
+                            <input type="hidden" name="redirect" value="contact.html">
+                            <input type="hidden" name="from_name" value="FPTU English Club Website">
+
+                            <p class="text-muted">This message will be delivered to our inbox. Kindly include your email
+                                address so we can get back to you.</p>
 
                             <div class="col-lg-5 col-6">
                                 <button type="submit" class="form-control">Send</button>
                             </div>
                         </form>
+
                     </div>
 
                     <div class="col-lg-6 col-12 mt-5 ms-auto">
                         <div class="row">
                             <div class="col-6 border-end contact-info">
-                                <h6 class="mb-3">New Business</h6>
+                                <h6 class="mb-3">Our Email</h6>
 
-                                <a href="mailto:hello@company.com" class="custom-link">
-                                    hello@company.com
+                                <a href="mailto:fel.daihocfptcantho@gmail.com" class="custom-link">
+                                    fel.daihocfptcantho@gmail.com
                                     <i class="bi-arrow-right ms-2"></i>
                                 </a>
                             </div>
 
                             <div class="col-6 contact-info">
-                                <h6 class="mb-3">Main Studio</h6>
-
-                                <a href="mailto:studio@company.com" class="custom-link">
-                                    studio@company.com
-                                    <i class="bi-arrow-right ms-2"></i>
-                                </a>
+                                <h6 class="mb-3">Our phone number</h6>
+                                <h4 class="custom-phone"> 091 763 00 95</h4>
                             </div>
 
                             <div class="col-6 border-top border-end contact-info">
-                                <h6 class="mb-3">Our Office</h6>
+                                <h6 class="mb-3">Our Location</h6>
 
-                                <p class="text-muted">Akershusstranda 20, 0150 Oslo, Norway</p>
+                                <p class="text-muted">FPT University Can Tho, Cau Rau Ram Street, Nguyen Van Cu
+                                    Extended, An Binh Ward, Ninh Kieu District, Can Tho, Vietnam</p>
                             </div>
 
                             <div class="col-6 border-top contact-info">
                                 <h6 class="mb-3">Our Socials</h6>
 
                                 <ul class="social-icon">
-
-                                    <li><a href="#" class="social-icon-link bi-messenger"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-youtube"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-
-                                    <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
+                                    <li><a href="https://www.facebook.com/fptenglishclub"
+                                            class="social-icon-link bi-facebook" target="_blank"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -203,6 +190,11 @@ https://www.tooplate.com/view/2127-little-fashion
             </div>
         </section>
     </main>
+
+    <!-- Facebook fixed Icon -->
+    <a href="https://www.facebook.com/fptenglishclub" class="facebook-float" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="50" height="50">
+    </a>
 
     <footer class="site-footer">
         <div class="container">
@@ -259,6 +251,7 @@ https://www.tooplate.com/view/2127-little-fashion
     <script src="./assets/js/jQuery.headroom.js"></script>
     <script src="./assets/js/slick.min.js"></script>
     <script src="./assets/js/custom.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>

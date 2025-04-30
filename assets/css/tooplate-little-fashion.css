@@ -143,6 +143,14 @@ a:hover {
 /*---------------------------------------
   CUSTOM LINK               
 -----------------------------------------*/
+.custom-phone {
+  color: var(--dark-yellow);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  position: relative;
+}
+
 .custom-link {
   color: var(--p-color);
   font-size: var(--custom-link-font-size);
@@ -581,6 +589,7 @@ h4 span {
 
 .slick-title {
   color: var(--white-color);
+  text-shadow: 1px 1px 10px black;
 }
 
 .slick-custom {
@@ -792,10 +801,6 @@ section {
 /*---------------------------------------
   ABOUT               
 -----------------------------------------*/
-.about {
-  background-color: black;
-}
-
 .about .nav-pills .nav-item {
   width: 100%;
 }
@@ -817,6 +822,15 @@ section {
   color: var(--primary-color);
 }
 
+.about-description p {
+  color: var(--dark-yellow);
+}
+
+.custom-link {
+  color: var(--dark-yellow);
+  font-weight: bolder;
+}
+
 /*---------------------------------------
   FAQ ACCORDION               
 -----------------------------------------*/
@@ -830,11 +844,26 @@ section {
 .accordion-button {
   background-color: transparent;
   box-shadow: none;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-normal);
+  padding-top: 1.5rem;
+  padding-right: 0;
+  padding-bottom: 1.5rem;
+  padding-left: 0;
+  transition: all 0.5s ease-out;
+}
+
+.accordion-button:hover {
+  transform: scale(1.05);
 }
 
 .accordion-button:not(.collapsed) {
   background: transparent;
   box-shadow: none;
+  color: var(--primary-color);
+  text-shadow: 1px 1px 20px rgba(255, 255, 0, 0.8);
+  transform: scale(1.05);
 }
 
 button:focus:not(:focus-visible) {
@@ -844,80 +873,11 @@ button:focus:not(:focus-visible) {
 
 .accordion-body {
   border-top: 1px solid rgba(0, 0, 0, .125);
-}
-
-.accordion-button {
-  font-size: 1.5rem;
-  font-weight: var(--font-weight-normal);
-  padding-top: 1.5rem;
-  padding-right: 0;
-  padding-bottom: 1.5rem;
-  padding-left: 0;
-}
-
-.accordion-body {
   padding: 2rem 0;
 }
 
-/*---------------------------------------
-  TEAM MEMBERS               
------------------------------------------*/
-.team {
-  background: var(--grey-color);
-}
-
-.team-thumb {
-  background: var(--white-color);
-  position: relative;
-  border-radius: .25rem;
-  padding: 42px 32px;
-}
-
-.team-info {
-  width: 100%;
-}
-
-.custom-modal-btn {
-  background: var(--grey-color);
-  color: var(--white-color);
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto 32px;
-  width: 42px;
-  height: 42px;
-}
-
-.modal-body {
-  padding: 4rem;
-}
-
-.modal-header {
-  padding-top: 7rem;
-  padding-bottom: 5rem;
-}
-
-.modal-header .btn-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 24px;
-  margin: 32px;
-}
-
-#cart-modal .modal-header .btn-close {
-  z-index: 2;
-  margin: 22px;
-}
-
-#cart-modal .modal-header {
-  border-bottom: 0;
-  padding: 0;
-}
-
-#cart-modal .modal-footer {
-  padding: 2rem 4rem;
+.accordion-body p {
+  color: var(--dark-yellow);
 }
 
 /*---------------------------------------
@@ -926,16 +886,17 @@ button:focus:not(:focus-visible) {
 .skill-thumb strong {
   display: inline-block;
   margin-bottom: 6px;
+  color: var(--primary-color);
 }
 
 .skill-thumb span {
-  color: var(--dark-color);
+  color: var(--primary-color);
   font-size: 24px;
   font-weight: var(--font-weight-bold);
 }
 
 .skill-thumb .progress {
-  background: var(--white-color);
+  background: var(--dark-yellow);
   box-shadow: none;
   border-radius: 100px;
   height: 1px;
@@ -943,7 +904,7 @@ button:focus:not(:focus-visible) {
 }
 
 .skill-thumb .progress .progress-bar-primary {
-  background: var(--grey-color);
+  background: var(--primary-color);
 }
 
 /*---------------------------------------
@@ -1615,6 +1576,120 @@ button:focus:not(:focus-visible) {
   }
 }
 
+/*---------------------------------------
+  ABOUT              
+-----------------------------------------*/
+.about-row {
+  margin: 30px 0;
+}
+
+.about-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 40px;
+  flex-direction: column;
+}
+
+.about-left p {
+  color: var(--white-color);
+  font-weight: bold;
+}
+
+.about-left span {
+  color: var(--primary-color);
+}
+
+.about-left {
+  /* Fly-in from left */
+  opacity: 0;
+  transform: translateX(-80px);
+  /* start off-screen to the right */
+  animation: flyInRight 1s ease-out forwards;
+}
+
+.about-right img {
+  border-radius: 100%;
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  box-shadow: 1px 1px 20px rgba(30, 41, 59, 1);
+
+  /* Fly-in from right */
+  opacity: 0;
+  transform: translateX(80px);
+  /* start off-screen to the right */
+  animation: flyInRight 0.8s ease-out forwards, pulse 3s infinite ease-in-out;
+  animation-delay: 0.2s, 1s;
+  /* pulse starts after fly-in */
+}
+
+.map-container {
+  margin-top: 30px;
+  overflow: hidden;
+  box-shadow: 1px 1px 20px rgba(30, 41, 59, 0.8);
+}
+
+.about-info-left {
+  /* Fly-in from left */
+  opacity: 0;
+  transform: translateX(-80px);
+  /* start off-screen to the right */
+  animation: flyInRight 1s ease-out forwards;
+}
+
+.about-info-right p {
+  color: var(--white-color);
+  font-weight: bold;
+  line-height: 2.2;
+
+  /* Fly-in from right */
+  opacity: 0;
+  transform: translateX(80px);
+  /* start off-screen to the right */
+  animation: flyInRight 1s ease-out forwards;
+}
+
+.about-info-right span {
+  color: var(--primary-color);
+}
+
+
+.about-info-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 40px;
+  flex-direction: column;
+}
+
+/* Keyframe for right-to-left fly-in */
+@keyframes flyInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Pulse animation stays the same */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 1px 1px 20px rgba(30, 41, 59, 0.7);
+  }
+
+  50% {
+    transform: scale(1.03);
+    box-shadow: 1px 1px 30px rgba(30, 41, 59, 1);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 1px 1px 20px rgba(30, 41, 59, 0.7);
+  }
+}
 
 /*---------------------------------------
   CONTACT              
@@ -1624,12 +1699,12 @@ button:focus:not(:focus-visible) {
 }
 
 .contact-form .form-control {
-  border-color: var(--grey-color);
+  border-color: var(--primary-color);
   font-weight: var(--font-weight-normal);
 }
 
 .form-floating>label {
-  color: var(--grey-color);
+  color: black;
   font-weight: var(--font-weight-normal);
 }
 
@@ -1637,7 +1712,7 @@ button:focus:not(:focus-visible) {
   background: var(--dark-color);
   border: none;
   border-radius: 100px;
-  color: var(--white-color);
+  color: var(--primary-color);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   padding: 16px;

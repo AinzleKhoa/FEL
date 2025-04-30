@@ -533,8 +533,8 @@ function initModal() {
 /*---------------------------------------
   BANNER (EVENTS)              
 -----------------------------------------*/
-function initEventsBackground() {
-    const header = document.getElementById('events-site-header');
+function initSectionBackground(headerId, offsetY) {
+    const header = document.getElementById(headerId);
     if (!header) return;
 
     const bg = header.getAttribute('data-bg');
@@ -544,28 +544,15 @@ function initEventsBackground() {
             url('${bg}')
         `;
         header.style.backgroundSize = "cover";
-        header.style.backgroundPosition = "center calc(100% - 100px)";
-        header.style.backgroundRepeat = "no-repeat";
-        header.style.backgroundAttachment = "fixed";
-    }
-}
-function initHallOfFameBackground() {
-    const header = document.getElementById('hof-site-header');
-    if (!header) return;
-
-    const bg = header.getAttribute('data-bg');
-    if (bg) {
-        header.style.background = `
-            linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%),
-            url('${bg}')
-        `;
-        header.style.backgroundSize = "cover";
-        header.style.backgroundPosition = "center calc(100% - 145px)";
+        header.style.backgroundPosition = `center calc(100% - ${offsetY}px)`;
         header.style.backgroundRepeat = "no-repeat";
         header.style.backgroundAttachment = "fixed";
     }
 }
 
+/*---------------------------------------
+  MEMBER (HALL OF FAME)              
+-----------------------------------------*/
 function initMemberBackground(config = { width: '130vh', height: '70vh', opacity: 0.3 }) {
     const header = document.getElementById('modal-content');
     if (!header) return;
@@ -637,10 +624,14 @@ window.onload = function () {
     displayOwlFeaturedEventsData();
     // Events section
     InitFiltersData();
-    initEventsBackground();
-    initHallOfFameBackground();
+    initSectionBackground('events-site-header', 100);
     // Hall Of Fame section
     InitSemestersData();
+    initSectionBackground('hof-site-header', 145);
+    // About us section
+    initSectionBackground('about-site-header', 75);
+    initSectionBackground('faq-site-header', -20);
+    initSectionBackground('contact-site-header', 0);
     // Initialize the modal system (Hall Of Fame)
     initModal();
     initHippoBackground();
