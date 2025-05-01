@@ -624,14 +624,17 @@ window.onload = function () {
     displayOwlFeaturedEventsData();
     // Events section
     InitFiltersData();
-    initSectionBackground('events-site-header', 100);
+    initSectionBackground('events-site-header', 60);
     // Hall Of Fame section
     InitSemestersData();
-    initSectionBackground('hof-site-header', 145);
+    initSectionBackground('hof-site-header', 100);
     // About us section
-    initSectionBackground('about-site-header', 75);
+    initSectionBackground('about-site-header', 50);
     initSectionBackground('faq-site-header', -20);
     initSectionBackground('contact-site-header', 0);
+    initSectionBackground('developer-site-header', -80);
+    initSectionBackground('developer', 0);
+    initSectionBackground('main-background', 0);
     // Initialize the modal system (Hall Of Fame)
     initModal();
     initHippoBackground();
