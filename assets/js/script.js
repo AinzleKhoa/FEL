@@ -103,7 +103,7 @@ function applyFilter(tag) {
     tag.classList.add('selected');
 
     // Pass the tag so it can display on the screen based on filtered tag
-    displayFilteredEventsData(filterValue);
+    initDisplayFilteredEventsData(filterValue);
 }
 /*---------------------------------------
   SORT              
@@ -189,6 +189,11 @@ async function InitFiltersData() {
 let currentPage = 1; // Start with the first page
 let itemsPerPage = 6; // Number of items to show per page
 
+async function initDisplayFilteredEventsData(filterValue) {
+    currentPage = 1; // Restart at the first page
+    displayFilteredEventsData(filterValue);
+}
+
 async function displayFilteredEventsData(filterValue) {
     try {
         const response = await fetch('./assets/data/data.json'); // Fetch data from the JSON file
@@ -220,7 +225,7 @@ async function displayFilteredEventsData(filterValue) {
         // Check if the array exists and loop through each event in the array
         eventsToDisplay.forEach(event => {
             output += `
-                        <div class="col-12 col-sm-6 col-md-4 col-xl-4 filtered_event">
+                        <div class="col-12 col-sm-6 col-xl-4 filtered_event">
                             <a href="${event.url}" class="d-block card-wrap" target="_blank">  
                                 <div class="card">
                                     <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top">
@@ -533,21 +538,38 @@ function initModal() {
 /*---------------------------------------
   BANNER (EVENTS)              
 -----------------------------------------*/
-function initSectionBackground(headerId, offsetY) {
+function initSectionBackground(headerId, offset1440, offset1024, offset768, offset425, offset375, offset320) {
     const header = document.getElementById(headerId);
     if (!header) return;
 
     const bg = header.getAttribute('data-bg');
-    if (bg) {
-        header.style.background = `
-            linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%),
-            url('${bg}')
-        `;
-        header.style.backgroundSize = "cover";
-        header.style.backgroundPosition = `center calc(100% - ${offsetY}px)`;
-        header.style.backgroundRepeat = "no-repeat";
-        header.style.backgroundAttachment = "fixed";
+    if (!bg) return;
+
+    const screenWidth = window.innerWidth;
+    let offsetY = offset1440; // default
+
+    if (screenWidth <= 320) {
+        offsetY = offset320;
+    } else if (screenWidth <= 375) {
+        offsetY = offset375;
+    } else if (screenWidth <= 425) {
+        offsetY = offset425;
+    } else if (screenWidth <= 768) {
+        offsetY = offset768;
+    } else if (screenWidth <= 1024) {
+        offsetY = offset1024;
+    } else if (screenWidth <= 1440) {
+        offsetY = offset1440;
     }
+
+    header.style.background = `
+        linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%),
+        url('${bg}')
+    `;
+    header.style.backgroundSize = "cover";
+    header.style.backgroundPosition = `center calc(100% - ${offsetY}px)`;
+    header.style.backgroundRepeat = "no-repeat";
+    header.style.backgroundAttachment = "fixed";
 }
 
 /*---------------------------------------
@@ -624,15 +646,15 @@ window.onload = function () {
     displayOwlFeaturedEventsData();
     // Events section
     InitFiltersData();
-    initSectionBackground('events-site-header', 60);
+    initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
     // Hall Of Fame section
     InitSemestersData();
-    initSectionBackground('hof-site-header', 100);
+    initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
     // About us section
-    initSectionBackground('about-site-header', 50);
-    initSectionBackground('faq-site-header', -20);
-    initSectionBackground('contact-site-header', 0);
-    initSectionBackground('developer-site-header', -80);
+    initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
+    initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
+    initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
+    initSectionBackground('developer-site-header', -40, 120, 90, 90, 90, 95);
     initSectionBackground('developer', 0);
     initSectionBackground('main-background', 0);
     // Initialize the modal system (Hall Of Fame)
