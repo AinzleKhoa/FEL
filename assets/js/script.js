@@ -642,22 +642,31 @@ async function initHippoBackground() {
 
 
 window.onload = function () {
-    // Home section
-    displayOwlFeaturedEventsData();
-    // Events section
-    InitFiltersData();
-    initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
-    // Hall Of Fame section
-    InitSemestersData();
-    initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
-    // About us section
-    initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
-    initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
-    initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
-    initSectionBackground('developer-site-header', -40, 120, 90, 90, 90, 95);
-    initSectionBackground('developer', 0);
+    if (window.location.pathname.endsWith("index.html")) {
+        displayOwlFeaturedEventsData();
+    }
+    if (window.location.pathname.endsWith("events.html")) {
+        InitFiltersData();
+        initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
+    }
+    if (window.location.pathname.endsWith("hall-of-fame.html")) {
+        initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
+        InitSemestersData();
+        initModal();
+        initHippoBackground();
+    }
+    if (window.location.pathname.endsWith("about.html")) {
+        initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
+    }
+    if (window.location.pathname.endsWith("faq.html")) {
+        initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
+    }
+    if (window.location.pathname.endsWith("contact.html")) {
+        initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
+    }
+    if (window.location.pathname.endsWith("developer.html")) {
+        initSectionBackground('developer-site-header', -40, 120, 90, 90, 90, 95);
+        initSectionBackground('developer', 0);
+    }
     initSectionBackground('main-background', 0);
-    // Initialize the modal system (Hall Of Fame)
-    initModal();
-    initHippoBackground();
 };
