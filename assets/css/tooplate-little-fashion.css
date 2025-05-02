@@ -658,6 +658,7 @@ h4 span {
 @media (max-width: 426px) {
   .slick-title {
     font-size: 24px;
+    margin-top: 10px;
   }
 
   .slick-des {
@@ -980,6 +981,13 @@ section {
 
 .accordion-button:hover {
   transform: scale(1.05);
+}
+
+/* Remove the hover scale on screens smaller than 1024px */
+@media (max-width: 900px) {
+  .accordion-button:hover {
+    transform: none;
+  }
 }
 
 .accordion-button:not(.collapsed) {
@@ -1406,6 +1414,14 @@ button:focus:not(:focus-visible) {
 .member-card:hover {
   transform: scale(1.05);
   box-shadow: 1px 1px 8px rgba(255, 255, 0, 0.8);
+}
+
+/* Remove the hover scale on screens smaller than 1024px */
+@media (max-width: 900px) {
+  .member-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .member-card img {

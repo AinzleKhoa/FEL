@@ -665,7 +665,7 @@ window.onload = function () {
         initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
     }
     if (window.location.pathname.endsWith("developer.html")) {
-        initSectionBackground('developer-site-header', -40, 120, 90, 90, 90, 95);
+        initSectionBackground('developer-site-header', 20, 160, 140, 90, 160, 160);
         initSectionBackground('developer', 0);
     }
     initSectionBackground('main-background', 0);
