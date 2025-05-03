@@ -1,45 +1,4 @@
-/*---------------------------------------
-  OWL CAROUSEL (HOME)           
------------------------------------------*/
-
-// Reusable function to initialize Owl Carousel
-function initializeOwlCarousel(selector) {
-    // Ensure we destroy the existing instance and reinitialize
-    $(selector).trigger('destroy.owl.carousel');
-
-    // Reinitialize Owl Carousel
-    $(selector).owlCarousel({
-        loop: true, // Enable looping
-        autoplay: true,
-        autoplayhoverpause: true,
-        lazyLoad: true,
-        nav: true,
-        autoplaytimeout: 100,
-        margin: 5,
-        padding: 5,
-        stagePadding: 5,
-        responsive: {
-            0: {
-                items: 1,
-                dots: false
-            },
-            728: {
-                items: 2,
-                dots: false
-            },
-            960: {
-                items: 3,
-                dots: false
-            },
-            1200: {
-                items: 4,
-                dots: true
-            }
-        }
-    });
-}
-
-async function displayOwlFeaturedEventsData() {
+async function displayRecentEventsData() {
     try {
         const response = await fetch('./assets/data/data.json'); // Fetch data from the JSON file
         const data = await response.json(); // Parse the JSON data
@@ -52,15 +11,15 @@ async function displayOwlFeaturedEventsData() {
             // 1. Sort events by date (newest first)
             let sortedEvents = sortByTimestamp(data.events);
 
-            // 2. Take only the top 9 most recent events
-            let recentEvents = sortedEvents.slice(0, 9);
+            // 2. Take only the top 4 most recent events
+            let recentEvents = sortedEvents.slice(0, 4);
 
             recentEvents.forEach(event => {
                 output += `
-                        <div class="ms-2 me-2 recent_event">
+                        <div class="col-12 col-md-6 col-lg-3 recent_event">
                             <a href="${event.url}" class="d-block card-wrap" target="_blank">  
                                 <div class="card">
-                                    <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top owl-lazy">
+                                    <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top">
                                     <div class="event-card-body">
                                         <h5 class="card-title">${event.title}</h5>
                                         <p>${event.description}</p>
@@ -78,8 +37,15 @@ async function displayOwlFeaturedEventsData() {
         // Insert the generated HTML into the container
         document.getElementById("events-container").innerHTML = output;
 
-        // Re-initialize Owl Carousel on the newly added elements
-        initializeOwlCarousel(".owl-carousel");
+        // Manually set the src attribute for images to ensure they load
+        const images = document.querySelectorAll('img[data-src]');
+        images.forEach(img => {
+            const dataSrc = img.getAttribute('data-src');
+            if (dataSrc) {
+                img.setAttribute('src', dataSrc);  // Set the src to the actual image source
+                img.removeAttribute('data-src');  // Remove data-src to clean up
+            }
+        });
     } catch (error) {
         console.error('Error fetching JSON data:', error);
     }
@@ -642,30 +608,34 @@ async function initHippoBackground() {
 
 
 window.onload = function () {
+    if (
+        window.location.pathname === "/" ||
+        window.location.pathname.endsWith("index.html")
+    ) {
+        displayRecentEventsData();
+    }
     if (window.location.pathname.endsWith("events.html")) {
         InitFiltersData();
         initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
-    } else
-        if (window.location.pathname.endsWith("hall-of-fame.html")) {
-            initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
-            InitSemestersData();
-            initModal();
-            initHippoBackground();
-        } else
-            if (window.location.pathname.endsWith("about.html")) {
-                initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
-            } else
-                if (window.location.pathname.endsWith("faq.html")) {
-                    initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
-                } else
-                    if (window.location.pathname.endsWith("contact.html")) {
-                        initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
-                    } else
-                        if (window.location.pathname.endsWith("developer.html")) {
-                            initSectionBackground('developer-site-header', 20, 130, 130, 90, 150, 165);
-                            initSectionBackground('developer', 0);
-                        } else {
-                            displayOwlFeaturedEventsData(); // index.html, because somehow pathname doesn't work on github page
-                        }
+    }
+    if (window.location.pathname.endsWith("hall-of-fame.html")) {
+        initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
+        InitSemestersData();
+        initModal();
+        initHippoBackground();
+    }
+    if (window.location.pathname.endsWith("about.html")) {
+        initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
+    }
+    if (window.location.pathname.endsWith("faq.html")) {
+        initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
+    }
+    if (window.location.pathname.endsWith("contact.html")) {
+        initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
+    }
+    if (window.location.pathname.endsWith("developer.html")) {
+        initSectionBackground('developer-site-header', 20, 130, 130, 90, 150, 165);
+        initSectionBackground('developer', 0);
+    }
     initSectionBackground('main-background', 0);
 };
