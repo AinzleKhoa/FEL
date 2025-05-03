@@ -642,10 +642,10 @@ async function initHippoBackground() {
 
 
 window.onload = function () {
-    if (
-        window.location.pathname === "/" ||
-        window.location.pathname.endsWith("index.html")
-    ) {
+    const path = window.location.pathname;
+    const page = path.split("/").pop(); // Get the last segment after last "/"
+
+    if (page === "" || page === "index.html") {
         displayOwlFeaturedEventsData();
     }
     if (window.location.pathname.endsWith("events.html")) {
