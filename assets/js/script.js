@@ -642,34 +642,30 @@ async function initHippoBackground() {
 
 
 window.onload = function () {
-    const path = window.location.pathname;
-    const page = path.split("/").pop(); // Get the last segment after last "/"
-
-    if (page === "" || page === "index.html") {
-        displayOwlFeaturedEventsData();
-    }
     if (window.location.pathname.endsWith("events.html")) {
         InitFiltersData();
         initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
-    }
-    if (window.location.pathname.endsWith("hall-of-fame.html")) {
-        initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
-        InitSemestersData();
-        initModal();
-        initHippoBackground();
-    }
-    if (window.location.pathname.endsWith("about.html")) {
-        initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
-    }
-    if (window.location.pathname.endsWith("faq.html")) {
-        initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
-    }
-    if (window.location.pathname.endsWith("contact.html")) {
-        initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
-    }
-    if (window.location.pathname.endsWith("developer.html")) {
-        initSectionBackground('developer-site-header', 20, 130, 130, 90, 150, 165);
-        initSectionBackground('developer', 0);
-    }
+    } else
+        if (window.location.pathname.endsWith("hall-of-fame.html")) {
+            initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
+            InitSemestersData();
+            initModal();
+            initHippoBackground();
+        } else
+            if (window.location.pathname.endsWith("about.html")) {
+                initSectionBackground('about-site-header', 90, 100, 140, 160, 160, 160);
+            } else
+                if (window.location.pathname.endsWith("faq.html")) {
+                    initSectionBackground('faq-site-header', 0, 200, 140, 160, 160, 160);
+                } else
+                    if (window.location.pathname.endsWith("contact.html")) {
+                        initSectionBackground('contact-site-header', 0, 180, 140, 90, 90, 90);
+                    } else
+                        if (window.location.pathname.endsWith("developer.html")) {
+                            initSectionBackground('developer-site-header', 20, 130, 130, 90, 150, 165);
+                            initSectionBackground('developer', 0);
+                        } else {
+                            displayOwlFeaturedEventsData(); // index.html, because somehow pathname doesn't work on github page
+                        }
     initSectionBackground('main-background', 0);
 };
