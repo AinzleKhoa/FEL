@@ -639,6 +639,11 @@ async function initHippoBackground() {
     }
 }
 
+function copyEmail() {
+    navigator.clipboard.writeText("fel.daihocfptcantho@gmail.com");
+    alert("Email copied to clipboard!");
+}
+
 
 
 window.onload = function () {

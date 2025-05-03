@@ -1645,16 +1645,17 @@ button:focus:not(:focus-visible) {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 .about-row p {
   font-size: 24px;
+  overflow-wrap: anywhere;
 }
 
 .about-left {
   height: 100%;
   padding: 40px;
+  text-align: center;
 }
 
 .about-left p {
@@ -1721,7 +1722,7 @@ button:focus:not(:focus-visible) {
 .about-info-right p {
   color: var(--white-color);
   font-weight: bold;
-  line-height: 2.2;
+  line-height: 2.4;
 
   /* Fly-in from right */
   opacity: 0;
