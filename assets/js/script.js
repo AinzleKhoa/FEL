@@ -1,55 +1,52 @@
 async function displayRecentEventsData() {
     try {
-        const response = await fetch('./assets/data/data.json'); // Fetch data from the JSON file
-        const data = await response.json(); // Parse the JSON data
+        const response = await fetch('./assets/data/data.json');
+        const data = await response.json();
 
         let output = "";
 
-        // Check if the array exists and loop through each event in the array
         if (Array.isArray(data.events)) {
-
-            // 1. Sort events by date (newest first)
-            let sortedEvents = sortByTimestamp(data.events);
-
-            // 2. Take only the top 4 most recent events
-            let recentEvents = sortedEvents.slice(0, 4);
+            const sortedEvents = sortByTimestamp(data.events);
+            const recentEvents = sortedEvents.slice(0, 4); // Show only 4
 
             recentEvents.forEach(event => {
                 output += `
-                        <div class="col-12 col-md-6 col-lg-3 recent_event">
-                            <a href="${event.url}" class="d-block card-wrap" target="_blank">  
-                                <div class="card">
-                                    <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top">
-                                    <div class="event-card-body">
-                                        <h5 class="card-title">${event.title}</h5>
-                                        <p>${event.description}</p>
-                                        <span>${event.tag}</span>
-                                        <span>(${event.date})</span>
-                                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 recent_event">
+                        <a href="${event.url}" class="d-block card-wrap" target="_blank">  
+                            <div class="card">
+                                <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top">
+                                <div class="event-card-body">
+                                    <h5 class="card-title">${event.title}</h5>
+                                    <p>${event.description}</p>
+                                    <span>${event.tag}</span>
+                                    <span>(${event.date})</span>
                                 </div>
-                                <div class="hover-tooltip">Click to view ${event.url}</div> <!-- Add this -->
-                            </a>
-                        </div>
-                    `;
+                            </div>
+                            <div class="hover-tooltip">Click to view ${event.url}</div> <!-- Add this -->
+                        </a>
+                    </div>
+                `;
             });
         }
 
-        // Insert the generated HTML into the container
-        document.getElementById("events-container").innerHTML = output;
+        document.getElementById("events-container").innerHTML = `
+            <div class="row justify-content-center">${output}</div>
+        `;
 
-        // Manually set the src attribute for images to ensure they load
-        const images = document.querySelectorAll('img[data-src]');
-        images.forEach(img => {
+        // Ensure images load correctly
+        document.querySelectorAll('img[data-src]').forEach(img => {
             const dataSrc = img.getAttribute('data-src');
             if (dataSrc) {
-                img.setAttribute('src', dataSrc);  // Set the src to the actual image source
-                img.removeAttribute('data-src');  // Remove data-src to clean up
+                img.setAttribute('src', dataSrc);
+                img.removeAttribute('data-src');
             }
         });
+
     } catch (error) {
-        console.error('Error fetching JSON data:', error);
+        console.error('Error fetching or displaying recent events:', error);
     }
 }
+
 /*---------------------------------------
   FILTER (EVENTS)        
 -----------------------------------------*/
