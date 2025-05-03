@@ -608,12 +608,8 @@ async function initHippoBackground() {
 
 
 window.onload = function () {
-    if (
-        window.location.pathname === "/" ||
-        window.location.pathname.endsWith("index.html")
-    ) {
-        displayRecentEventsData();
-    }
+
+    displayRecentEventsData();
     if (window.location.pathname.endsWith("events.html")) {
         InitFiltersData();
         initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
