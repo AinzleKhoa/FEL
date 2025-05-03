@@ -639,15 +639,13 @@ async function initHippoBackground() {
     }
 }
 
-function copyEmail() {
-    navigator.clipboard.writeText("fel.daihocfptcantho@gmail.com");
-    alert("Email copied to clipboard!");
-}
-
 
 
 window.onload = function () {
-    if (window.location.pathname.endsWith("index.html")) {
+    if (
+        window.location.pathname === "/" ||
+        window.location.pathname.endsWith("index.html")
+    ) {
         displayOwlFeaturedEventsData();
     }
     if (window.location.pathname.endsWith("events.html")) {
