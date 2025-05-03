@@ -501,36 +501,36 @@ function initModal() {
 /*---------------------------------------
   BANNER (EVENTS)              
 -----------------------------------------*/
-function initSectionBackground(headerId, offset1440, offset1024, offset768, offset425, offset375, offset320) {
+function initSectionBackground(headerId) {
     const header = document.getElementById(headerId);
     if (!header) return;
 
     const bg = header.getAttribute('data-bg');
     if (!bg) return;
 
-    const screenWidth = window.innerWidth;
-    let offsetY = offset1440; // default
+    header.style.background = `
+        linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%),
+        url('${bg}')
+    `;
+    header.style.backgroundSize = "cover";
+    header.style.backgroundPosition = "center center";
+    header.style.backgroundRepeat = "no-repeat";
+    header.style.backgroundAttachment = "scroll";
+}
 
-    if (screenWidth <= 320) {
-        offsetY = offset320;
-    } else if (screenWidth <= 375) {
-        offsetY = offset375;
-    } else if (screenWidth <= 425) {
-        offsetY = offset425;
-    } else if (screenWidth <= 768) {
-        offsetY = offset768;
-    } else if (screenWidth <= 1024) {
-        offsetY = offset1024;
-    } else if (screenWidth <= 1440) {
-        offsetY = offset1440;
-    }
+function initMainBackground(headerId) {
+    const header = document.getElementById(headerId);
+    if (!header) return;
+
+    const bg = header.getAttribute('data-bg');
+    if (!bg) return;
 
     header.style.background = `
         linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0) 100%),
         url('${bg}')
     `;
     header.style.backgroundSize = "cover";
-    header.style.backgroundPosition = `center calc(100% - ${offsetY}px)`;
+    header.style.backgroundPosition = "center center";
     header.style.backgroundRepeat = "no-repeat";
     header.style.backgroundAttachment = "fixed";
 }
@@ -630,5 +630,5 @@ window.onload = function () {
                         } else {
                             displayRecentEventsData();
                         }
-    initSectionBackground('main-background', 0);
+    initMainBackground('main-background', 0);
 };
