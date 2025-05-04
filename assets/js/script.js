@@ -187,6 +187,17 @@ async function displayFilteredEventsData(filterValue) {
         // Sort the filtered events by date (ascending or descending)
         filteredEvents = sortByTimestamp(filteredEvents);
 
+        // When the filtered result is empty
+        if (filteredEvents.length === 0) {
+            document.getElementById("filtered_events_group").innerHTML = `
+                <div class="col-12">
+                    <h3 style="color: var(--primary-color);">No events found for this filter.</h3>
+                </div>
+            `;
+            document.getElementById("pagination").innerHTML = ""; // Clear pagination
+            return; // Stop further execution
+        }
+
         // Pagination - calculate start and end for the page
         const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
         const startIndex = (currentPage - 1) * itemsPerPage
@@ -263,6 +274,17 @@ async function displaySearchedEventsData() {
 
         // Sort the filtered events by date (ascending or descending)
         matchedEvents = sortByTimestamp(matchedEvents);
+
+        // When the filtered result is empty
+        if (matchedEvents.length === 0) {
+            document.getElementById("filtered_events_group").innerHTML = `
+                        <div class="col-12">
+                            <h3 style="color: var(--primary-color);">No events found for this search.</h3>
+                        </div>
+                    `;
+            document.getElementById("pagination").innerHTML = ""; // Clear pagination
+            return; // Stop further execution
+        }
 
         // Pagination - calculate start and end for the page
         const totalPages = Math.ceil(matchedEvents.length / itemsPerPage);

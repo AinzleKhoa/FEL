@@ -926,9 +926,9 @@ section {
   }
 }
 
-@media (max-width: 461px) {
+@media (max-width: 480px) {
   .custom-link {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .custom-phone {
@@ -936,7 +936,13 @@ section {
   }
 }
 
-@media (max-width: 376px) {
+@media (max-width: 435px) {
+  .custom-link {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
   .custom-link {
     font-size: 11px;
   }
@@ -946,13 +952,25 @@ section {
   }
 }
 
-@media (max-width: 355px) {
+@media (max-width: 370px) {
   .custom-link {
-    font-size: 9px;
+    font-size: 10px;
   }
 
   .custom-phone {
     font-size: 12px;
+  }
+}
+
+@media (max-width: 330px) {
+  .custom-link {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 319px) {
+  .custom-link {
+    overflow-wrap: anywhere;
   }
 }
 
@@ -1117,7 +1135,7 @@ button:focus:not(:focus-visible) {
 }
 
 .card span {
-  color: var(--dark-yellow);
+  color: var(--primary-color);
 }
 
 .card-wrap {
