@@ -127,6 +127,46 @@ https://www.tooplate.com/view/2127-little-fashion
                                                     <i class="fas fa-sort-down"></i> <!-- Default sort icon -->
                                                 </span></h4>
 
+                                            <div id="filter_search" class="container">
+                                                <div class="row g-2 align-items-end">
+                                                    <!-- Search Input -->
+                                                    <div class="col-12 col-md-12">
+                                                        <label for="searchInput" class="form-label search-title">Search
+                                                            by
+                                                            Title</label>
+                                                        <input type="text" id="searchInput" class="form-control"
+                                                            placeholder="e.g. Workshop">
+                                                    </div>
+
+                                                    <!-- Start Date -->
+                                                    <div class="col-6 col-md-6">
+                                                        <label for="startDate"
+                                                            class="form-label search-title">From</label>
+                                                        <input type="date" id="startDate" class="form-control">
+                                                    </div>
+
+                                                    <!-- End Date -->
+                                                    <div class="col-6 col-md-6">
+                                                        <label for="endDate" class="form-label search-title">To</label>
+                                                        <input type="date" id="endDate" class="form-control">
+                                                    </div>
+
+                                                    <!-- Search Button -->
+                                                    <div class="col-12">
+                                                        <button type="submit" id="searchButton"
+                                                            class="btn w-100 search-btn">Search</button>
+                                                    </div>
+
+                                                    <!-- Clear Button -->
+                                                    <div class="col-12">
+                                                        <button type="button" id="clearButton"
+                                                            class="btn btn-secondary w-100">Clear</button>
+                                                    </div>
+                                                </div>
+
+                                                <div id="errorMessage" class="mt-2 text-danger"></div>
+                                            </div>
+
                                             <div id="filter_group">
                                                 <!-- Categories will be inserted here dynamically by data-filter.js -->
                                             </div>
@@ -206,6 +246,12 @@ https://www.tooplate.com/view/2127-little-fashion
                         <li><a href="https://www.facebook.com/fptenglishclub" class="social-icon-link bi-facebook"
                                 target="_blank"></a>
                         </li>
+                        <li><a onclick="copyEmail()" class="social-icon-link bi-envelope" target="_blank"
+                                style="cursor: pointer;"></a>
+                        </li>
+                        <li><a href="https://maps.app.goo.gl/sqmdtHvGWd7DpaZX7" class="social-icon-link bi-geo-alt"
+                                target="_blank"></a>
+                        </li>
                     </ul>
                 </div>
 
@@ -220,6 +266,7 @@ https://www.tooplate.com/view/2127-little-fashion
     <script src="./assets/js/jQuery.headroom.js"></script>
     <script src="./assets/js/slick.min.js"></script>
     <script src="./assets/js/custom.js"></script>
+    <script src="./assets/js/lazysizes.min.js"></script>
     <script src="./assets/js/script.js"></script>
 
 </body>

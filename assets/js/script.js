@@ -1,77 +1,8 @@
-async function displayRecentEventsData() {
-    try {
-        const response = await fetch('./assets/data/data.json');
-        const data = await response.json();
-
-        let output = "";
-
-        if (Array.isArray(data.events)) {
-            const sortedEvents = sortByTimestamp(data.events);
-            const recentEvents = sortedEvents.slice(0, 4); // Show only 4
-
-            recentEvents.forEach(event => {
-                output += `
-                    <div class="col-12 col-md-6 col-lg-3 recent_event">
-                        <a href="${event.url}" class="d-block card-wrap" target="_blank">  
-                            <div class="card">
-                                <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top">
-                                <div class="event-card-body">
-                                    <h5 class="card-title">${event.title}</h5>
-                                    <p>${event.description}</p>
-                                    <span>${event.tag}</span>
-                                    <span>(${event.date})</span>
-                                </div>
-                            </div>
-                            <div class="hover-tooltip">Click to view ${event.url}</div> <!-- Add this -->
-                        </a>
-                    </div>
-                `;
-            });
-        }
-
-        document.getElementById("events-container").innerHTML = `
-            <div class="row justify-content-center">${output}</div>
-        `;
-
-        // Ensure images load correctly
-        document.querySelectorAll('img[data-src]').forEach(img => {
-            const dataSrc = img.getAttribute('data-src');
-            if (dataSrc) {
-                img.setAttribute('src', dataSrc);
-                img.removeAttribute('data-src');
-            }
-        });
-
-    } catch (error) {
-        console.error('Error fetching or displaying recent events:', error);
-    }
-}
-
 /*---------------------------------------
-  FILTER (EVENTS)        
------------------------------------------*/
-let currentfilterValue = ""; // Global access variable
-
-// Function to apply the content filter
-function applyFilter(tag) {
-    const filterValue = tag.getAttribute('data-filter'); // Get the selected filter value
-    const filterTags = document.querySelectorAll('.filter_tag');
-
-    currentfilterValue = filterValue;
-
-    // Remove 'selected' class from all tags and reset background
-    filterTags.forEach(tag => tag.classList.remove('selected'));
-
-    // Add 'selected' class to the clicked tag to highlight it
-    tag.classList.add('selected');
-
-    // Pass the tag so it can display on the screen based on filtered tag
-    initDisplayFilteredEventsData(filterValue);
-}
-/*---------------------------------------
-  SORT              
+  SORT (HOME, EVENTS)              
 -----------------------------------------*/
 let isDescending = true; // Default is descending order
+let currentViewMode = 'filter'; // or 'search'
 
 // Function to convert human-readable date to Unix timestamp
 function getTimestamp(dateString) {
@@ -101,7 +32,83 @@ function toggleSort() {
 
     isDescending = !isDescending; // Toggle the sorting state
 
-    displayFilteredEventsData(currentfilterValue);
+    if (currentViewMode === 'search') {
+        displaySearchedEventsData();
+    } else {
+        displayFilteredEventsData(currentFilterValue);
+    }
+}
+/*---------------------------------------
+  RECENT EVENTS (HOME)        
+-----------------------------------------*/
+async function displayRecentEventsData() {
+    try {
+        const response = await fetch('./assets/data/data.json');
+        const data = await response.json();
+
+        let output = "";
+
+        if (Array.isArray(data.events)) {
+            const sortedEvents = sortByTimestamp(data.events);
+            const recentEvents = sortedEvents.slice(0, 4); // Show only 4
+
+            recentEvents.forEach(event => {
+                output += `
+                    <div class="col-12 col-sm-6 col-lg-3 d-flex mb-4">
+                        <a href="${event.url}" class="card-wrap d-flex w-100" target="_blank">  
+                            <div class="card h-100 w-100 d-flex flex-column">
+                                <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top lazyload">
+                                <div class="event-card-body flex-grow-1">
+                                    <h5 class="card-title">${event.title}</h5>
+                                    <p>${event.description}</p>
+                                    <span>${event.tag}</span>
+                                    <span>(${event.date})</span>
+                                </div>
+                            </div>
+                            <div class="hover-tooltip">Click to view ${event.url}</div> <!-- Add this -->
+                        </a>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById("events-container").innerHTML = `
+            <div class="row justify-content-center">${output}</div>
+        `;
+
+    } catch (error) {
+        console.error('Error fetching or displaying recent events:', error);
+    }
+}
+
+/*---------------------------------------
+  FILTER (EVENTS)        
+-----------------------------------------*/
+let currentfilterValue = ""; // Global access variable
+
+// Function to apply the content filter
+function applyFilter(tag) {
+    const filterValue = tag.getAttribute('data-filter'); // Get the selected filter value
+    const filterTags = document.querySelectorAll('.filter_tag');
+
+    // Only clear search and date input values, not filter tags
+    clearSearchInputs(); // Compatiable with displaySearchedEventsData
+
+    currentfilterValue = filterValue;
+
+    // Remove 'selected' class from all tags and reset background
+    filterTags.forEach(tag => tag.classList.remove('selected'));
+
+    // Add 'selected' class to the clicked tag to highlight it
+    tag.classList.add('selected');
+
+    // Pass the tag so it can display on the screen based on filtered tag
+    initDisplayFilteredEventsData(filterValue);
+}
+
+function removeSelectedTag() {
+    const filterTags = document.querySelectorAll('.filter_tag'); // Select all tags
+    filterTags.forEach(tag => tag.classList.remove('selected')); // Remove 'selected' from each
 }
 /*---------------------------------------
   FILTERED EVENTS (EVENTS)              
@@ -163,6 +170,8 @@ async function displayFilteredEventsData(filterValue) {
         const data = await response.json(); // Parse the JSON data
         currentFilterValue = filterValue; // Access globally
 
+        currentViewMode = 'filter' // Tell the global variable that the sort will be calling filter instead
+
         let filteredEvents = [];
 
         // Check if the array exists and loop through each event in the array
@@ -188,11 +197,11 @@ async function displayFilteredEventsData(filterValue) {
         // Check if the array exists and loop through each event in the array
         eventsToDisplay.forEach(event => {
             output += `
-                        <div class="col-12 col-sm-6 col-xl-4 filtered_event">
-                            <a href="${event.url}" class="d-block card-wrap" target="_blank">  
-                                <div class="card">
-                                    <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top">
-                                    <div class="event-card-body">
+                        <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
+                            <a href="${event.url}" class="card-wrap d-flex w-100" target="_blank">  
+                                <div class="card h-100 w-100 d-flex flex-column">
+                                    <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top lazyload">
+                                    <div class="event-card-body flex-grow-1">
                                         <h5 class="card-title">${event.title}</h5>
                                         <p>${event.description}</p>
                                         <span>${event.tag}</span>
@@ -209,25 +218,124 @@ async function displayFilteredEventsData(filterValue) {
         document.getElementById("filtered_events_group").innerHTML = output;
 
         // Generate Pagination Buttons
-        generatePagination(filteredEvents.length, totalPages);
-
-        // Manually set the src attribute for images to ensure they load
-        const images = document.querySelectorAll('img[data-src]');
-        images.forEach(img => {
-            const dataSrc = img.getAttribute('data-src');
-            if (dataSrc) {
-                img.setAttribute('src', dataSrc);  // Set the src to the actual image source
-                img.removeAttribute('data-src');  // Remove data-src to clean up
-            }
-        });
+        generatePagination(filteredEvents.length, totalPages, () => displayFilteredEventsData(filterValue));
     } catch (error) {
         console.error('Error fetching JSON data:', error);
     }
 }
+
+async function displaySearchedEventsData() {
+    const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+    const startDateInput = document.getElementById('startDate').value;
+    const endDateInput = document.getElementById('endDate').value;
+
+    const startDate = new Date(startDateInput);
+    const endDate = new Date(endDateInput);
+
+    // Check if both dates are valid and the range is logical
+    if (startDateInput && endDateInput && startDate > endDate) {
+        alert("⚠️ The end date must be after the start date.");
+        return;
+    }
+
+    try {
+        const response = await fetch('./assets/data/data.json'); // Fetch data from the JSON file
+        const data = await response.json(); // Parse the JSON data
+
+        currentViewMode = 'search' // Tell the global variable that the sort will be calling filter instead
+
+        // Normalize search
+        const keyword = searchTerm.trim().toLowerCase();
+        let matchedEvents = [];
+
+        // Check if the array exists and loop through each event in the array
+        if (Array.isArray(data.events)) {
+            matchedEvents = data.events.filter(event => {
+                const titleMatch = event.title.toLowerCase().includes(searchTerm);
+
+                const eventDate = new Date(event.date);
+                const dateMatch = (!isNaN(startDate) ? eventDate >= startDate : true) &&
+                    (!isNaN(endDate) ? eventDate <= endDate : true);
+
+                return titleMatch && dateMatch;
+            });
+        }
+
+        // Sort the filtered events by date (ascending or descending)
+        matchedEvents = sortByTimestamp(matchedEvents);
+
+        // Pagination - calculate start and end for the page
+        const totalPages = Math.ceil(matchedEvents.length / itemsPerPage);
+        const startIndex = (currentPage - 1) * itemsPerPage
+        const endIndex = startIndex + itemsPerPage;
+        const eventsToDisplay = matchedEvents.slice(startIndex, endIndex);
+
+        let output = "";
+        // Check if the array exists and loop through each event in the array
+        eventsToDisplay.forEach(event => {
+            output += `
+                        <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
+                            <a href="${event.url}" class="card-wrap d-flex w-100" target="_blank">  
+                                <div class="card h-100 w-100 d-flex flex-column">
+                                    <img data-src="${event.image}" alt="${event.title}" class="event-card-img-top lazyload">
+                                    <div class="event-card-body flex-grow-1">
+                                        <h5 class="card-title">${event.title}</h5>
+                                        <p>${event.description}</p>
+                                        <span>${event.tag}</span>
+                                        <span>(${event.date})</span>
+                                    </div>
+                                </div>
+                                <div class="hover-tooltip">Click to view ${event.url}</div> <!-- Add this -->
+                            </a>
+                        </div>
+                    `;
+        });
+
+        removeSelectedTag(); // Remove all selected tag first
+        // Insert the generated HTML into the container
+        document.getElementById("filtered_events_group").innerHTML = output;
+
+        // Generate Pagination Buttons
+        generatePagination(matchedEvents.length, totalPages, displaySearchedEventsData);
+    } catch (error) {
+        console.error('Error fetching JSON data:', error);
+    }
+}
+
+function clearAllFilters() {
+    // Clear all input fields
+    document.getElementById('searchInput').value = '';
+    document.getElementById('startDate').value = '';
+    document.getElementById('endDate').value = '';
+
+    // Optionally, blur and refocus to reset browser autofill style (especially for text input)
+    document.getElementById('searchInput').blur();
+    document.getElementById('searchInput').focus();
+
+    document.getElementById('startDate').blur();
+    document.getElementById('endDate').blur();
+
+    // Clear any validation or error messages
+    document.getElementById('errorMessage').textContent = '';
+
+    // Reload full list or reset the filtered display
+    currentPage = 1;
+    // Apply the "All" filter after filters are loaded
+    const allFilterTag = document.querySelector('.filter_tag[data-filter="all"]');
+    if (allFilterTag) {
+        applyFilter(allFilterTag); // Apply the "All" filter
+    }
+}
+
+function clearSearchInputs() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('startDate').value = '';
+    document.getElementById('endDate').value = '';
+}
 /*---------------------------------------
   PAGINATION (EVENTS)              
 -----------------------------------------*/
-function generatePagination(totalItems, totalPages) {
+function generatePagination(totalItems, totalPages, updateFunction) {
     const pagination = document.getElementById('pagination');
     let paginationHTML = '';
 
@@ -289,7 +397,7 @@ function generatePagination(totalItems, totalPages) {
             const newPage = parseInt(pageLink.dataset.page);
             if (newPage !== currentPage) {
                 currentPage = newPage;
-                displayFilteredEventsData(currentFilterValue);
+                updateFunction(); // use callback
             }
         });
     });
@@ -299,7 +407,7 @@ function generatePagination(totalItems, totalPages) {
         e.preventDefault();
         if (currentPage !== 1) {
             currentPage = 1;
-            displayFilteredEventsData(currentFilterValue);
+            updateFunction(); // use callback
         }
     });
 
@@ -308,7 +416,7 @@ function generatePagination(totalItems, totalPages) {
         e.preventDefault();
         if (currentPage > 1) {
             currentPage--;
-            displayFilteredEventsData(currentFilterValue);
+            updateFunction(); // use callback
         }
     });
 
@@ -317,7 +425,7 @@ function generatePagination(totalItems, totalPages) {
         e.preventDefault();
         if (currentPage < totalPages) {
             currentPage++;
-            displayFilteredEventsData(currentFilterValue);
+            updateFunction(); // use callback
         }
     });
 
@@ -326,7 +434,7 @@ function generatePagination(totalItems, totalPages) {
         e.preventDefault();
         if (currentPage !== totalPages) {
             currentPage = totalPages;
-            displayFilteredEventsData(currentFilterValue);
+            updateFunction(); // use callback
         }
     });
 }
@@ -417,16 +525,6 @@ async function displayMembersBySemesterData(event) {
         });
         // Insert the generated HTML into the container
         document.getElementById("semester-club_member").innerHTML = outputClubMembers;
-
-        // Manually set the src attribute for images to ensure they load
-        const images = document.querySelectorAll('img[data-src]');
-        images.forEach(img => {
-            const dataSrc = img.getAttribute('data-src');
-            if (dataSrc) {
-                img.setAttribute('src', dataSrc);  // Set the src to the actual image source
-                img.removeAttribute('data-src');  // Remove data-src to clean up
-            }
-        });
     } catch (error) {
         console.error('Error fetching JSON data:', error);
     }
@@ -446,7 +544,7 @@ function createMemberCard(member) {
                 data-achievements="${member.achievements || ''}"
                 data-contributions="${member.contributions || ''}"
                 data-background="${member.background || ''}">
-                <img data-src="${member.image}" alt="${member.name}" class="event-card-img-top">
+                <img data-src="${member.image}" alt="${member.name}" class="event-card-img-top lazyload">
                 <div class="member-role">
                     <span>${member.role}</span>
                 </div>
@@ -602,13 +700,27 @@ async function initHippoBackground() {
     }
 }
 
+function copyEmail() {
+    navigator.clipboard.writeText("fel.daihocfptcantho@gmail.com")
+        .then(() => alert("Email copied to clipboard!"))
+        .catch(() => alert("Failed to copy email."));
+}
+
 
 
 window.onload = function () {
     if (window.location.pathname.endsWith("events.html")) {
         InitFiltersData();
         initSectionBackground('events-site-header', 60, 100, 220, 200, 200, 200);
-    } else
+        document.getElementById("searchButton").addEventListener("click", function () {
+            const searchValue = document.getElementById("searchInput").value.trim();
+            displaySearchedEventsData(searchValue);
+        });
+        document.getElementById('clearButton').addEventListener('click', () => {
+            clearAllFilters()
+        });
+    }
+    else
         if (window.location.pathname.endsWith("hall-of-fame.html")) {
             initSectionBackground('hof-site-header', 130, 100, 220, 200, 200, 220);
             InitSemestersData();
