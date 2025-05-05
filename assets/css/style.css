@@ -1870,6 +1870,16 @@ button:focus:not(:focus-visible) {
   transition: all 0.3s ease;
 }
 
+.portfolio {
+  color: var(--primary-color);
+  text-shadow: 1px 1px 20px var(--primary-color);
+  transition: all 0.3 ease;
+}
+
+.portfolio:hover {
+  transform: scale(1.05);
+}
+
 .hover-text {
   display: inline-block;
   position: relative;
